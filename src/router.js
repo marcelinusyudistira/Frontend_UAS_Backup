@@ -10,13 +10,13 @@ function importComponent(path) {
 const router = new VueRouter({
     mode: 'history',
     routes: [
-        {
-            path: '/',
+        {   //PATH ADMINISTRATOR
+            path: '/admin',
             component: importComponent('DashboardLayout'),
             children: [
                 //Dashboard
                 {
-                    path: '/dashboard',
+                    path: '/',
                     name: 'Dashboard',
                     meta: { title: 'Dashboard' },
                     component: importComponent('Dashboard'),
@@ -67,13 +67,13 @@ const router = new VueRouter({
             component: importComponent('Register'),
         },
 
-        {
-        path: '/homes',
+        {   //PATH USER
+            path: '/',
             component: importComponent('NavbarLayout'),
             children: [
                 //Dashboard
                 {
-                    path: '/homePage',
+                    path: '/',
                     name: 'Home',
                     meta: { title: 'Home' },
                     component: importComponent('Page/Home'),
