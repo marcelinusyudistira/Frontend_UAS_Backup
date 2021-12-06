@@ -1,8 +1,23 @@
 <template>
-  <v-card
-    class="mx-auto"
-    max-width="500"
-  >
+  <div>
+    <v-card
+      class="mx-auto"
+    >
+      <v-carousel
+        :cycle="cycle"
+        class="mx-auto"
+        height="300px"
+        >
+        <v-carousel-item>
+          
+        </v-carousel-item>
+      </v-carousel>
+      <v-spacer/>
+    </v-card> 
+    <v-container fluid>
+
+    </v-container>
+    <!--
     <v-system-bar
       color="indigo darken-2"
       dark
@@ -30,7 +45,7 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
     </v-toolbar>
-
+    
     <v-container fluid>
       <v-row dense>
         <v-col
@@ -66,8 +81,8 @@
           </v-card>
         </v-col>
       </v-row>
-    </v-container>
-  </v-card>
+    </v-container> -->
+  </div>
 </template>
 
 <script>

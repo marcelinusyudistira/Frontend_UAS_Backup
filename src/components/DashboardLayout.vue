@@ -41,11 +41,11 @@ export default {
     return {
       drawer: true,
       items: [
-        { title: "Dashboard", to: '/dashboard' },
-        { title: 'Manage User', to: '/user' },
-        { title: 'Manage Category', to: '/category' },
-        { title: 'Manage Brand', to: '/brand' },
-        { title: 'Manage Produk', to: '/produk' },
+        { title: "Dashboard", to: 'dashboard' },
+        { title: 'Manage User', to: 'user' },
+        { title: 'Manage Category', to: 'category' },
+        { title: 'Manage Brand', to: 'brand' },
+        { title: 'Manage Produk', to: 'produk' },
       ],
     };
   },
