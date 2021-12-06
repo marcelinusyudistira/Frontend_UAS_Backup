@@ -10,7 +10,7 @@
           light>
           <v-list-item-content class="white">
             <v-list-item-title class="title"> Tumbas Ecommerce </v-list-item-title>
-            <v-list-item-subtitle> Buy what are you want </v-list-item-subtitle>
+            <v-list-item-subtitle> Buy whatever you want </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </div>
