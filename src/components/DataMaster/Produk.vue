@@ -23,7 +23,7 @@
                     <v-btn small @click="deleteHandler(item.id)">delete</v-btn>
                 </template>
                 <template v-slot:[`item.gambarProduk`]="{ item }">
-                    <v-img :src="require('@/assets/produk/'+ item.gambarProduk + item.id +'.png')" class="white--text align-end" height="80px" width="80px"></v-img>
+                    <v-img :src="require('@/assets/produk/'+ item.gambarProduk + '.png')" class="white--text align-end" height="80px" width="80px"></v-img>
                 </template>
             </v-data-table>
         </v-card>
