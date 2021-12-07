@@ -47,7 +47,7 @@
         </v-card>
       </v-menu>
 
-      <v-menu v-model="userinfo"
+      <v-menu
         offset-y="true"
         bottom
         right>
@@ -56,30 +56,24 @@
             <v-icon>mdi-account</v-icon>
           </v-btn>
         </template>
-        <v-card>
-          <v-col>
-            <v-row>
-              <div class="d-flex">
-                <v-img  :src="userinfo.icon" width="80" height="80px"/>
-                <v-container fluid class="fill-height font-weight-bold">
-                  {{ userinfo.name }}
-                </v-container>
-              </div>
-            </v-row>
-            <v-row>
-              <v-container pa-0 ma-0>
-                <v-list>
-                  <v-list-item
-                    v-for="opt in signedoption"
-                    :key="opt"
-                    :to="opt.to"
-                    >
-                    {{ opt.title }}
-                  </v-list-item>
-                </v-list>
-              </v-container>
-            </v-row>
-          </v-col>
+        <v-card v-model="userinfo">
+          <v-list>
+            <v-list-item>
+              <v-list-item-avatar>
+                <v-img :src="userinfo.icon"/>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title>{{ userinfo.name }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              v-for="opt in signedoption"
+              :key="opt"
+              :to="opt.to"
+              >
+              {{ opt.title }}
+            </v-list-item>
+          </v-list>
         </v-card>
       </v-menu>
     </v-app-bar>
@@ -142,7 +136,9 @@ export default {
   methods:{
     searchProduct(){
       //Ganti dan masukkan fungsi search query
-      this.$router.push("/searchPage?search="+this.searchquery);
+      //this.$router.push("/searchPage?search="+this.searchquery);
+      this.$router.replace({name: 'Search', query: {search : this.searchquery}});
+      window.location.reload();
     }
   }
 };

@@ -131,8 +131,8 @@ const router = new VueRouter({
                 //Profil
                 {
                     path: '/profilePage',
-                    name: 'Home',
-                    meta: { title: 'Home' },
+                    name: 'Profile',
+                    meta: { title: 'Profile' },
                     component: importComponent('Page/Profil'),
                 },
             ],
