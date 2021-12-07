@@ -95,8 +95,8 @@ const router = new VueRouter({
                 },
                 //Category Query
                 {
-                    path: '/kategoriPage/:id',
-                    name: 'Kategori',
+                    path: '/kategoriPage/:id?',
+                    name: 'KategoriP',
                     meta: { title: 'Kategori' },
                     component: importComponent('Page/FilteredProduk'),
                 },
@@ -109,8 +109,8 @@ const router = new VueRouter({
                 },
                 //Brand Query
                 {
-                    path: '/brandPage/:id',
-                    name: 'Brand',
+                    path: '/brandPage/:id?',
+                    name: 'BrandP',
                     meta: { title: 'Brands' },
                     component: importComponent('Page/FilteredProduk'),
                 },
