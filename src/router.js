@@ -81,8 +81,8 @@ const router = new VueRouter({
                 },
                 //Produk
                 {
-                    path: '/produkPage',
-                    name: 'Produk',
+                    path: '/produkPage:id?',
+                    name: 'ProdukP',
                     meta: { title: 'Produk' },
                     component: importComponent('Page/Produk'),
                 },

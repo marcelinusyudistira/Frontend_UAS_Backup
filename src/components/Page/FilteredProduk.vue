@@ -81,7 +81,10 @@
     }),
     methods: {
       viewProduct(index){
-        console.log(index);
+        this.$router.push({
+          name: 'ProdukP',
+          params: {id: index}
+        });
       },
       readData() {
             var url = this.$api + '/produk';
