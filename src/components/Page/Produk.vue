@@ -19,7 +19,7 @@
             </v-container>
         </div>
         <v-card-actions class="float-left float-end mt-n13">
-            <v-btn color="green" text>ADD TO CART</v-btn>
+            <v-btn color="teal" text>ADD TO CART</v-btn>
         </v-card-actions>
     </v-card>
 </template>

@@ -17,7 +17,7 @@
                 src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"/>
                 <v-col>
                     <v-row class="mx-2 mt-2 text-body-1">
-                        Kategori Produk
+                        Brand X
                     </v-row>
                 </v-col>
             </v-card>
