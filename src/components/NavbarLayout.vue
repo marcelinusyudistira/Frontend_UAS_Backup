@@ -142,7 +142,7 @@ export default {
   methods:{
     searchProduct(){
       //Ganti dan masukkan fungsi search query
-      console.log(this.searchquery);
+      this.$router.push("/searchPage?search="+this.searchquery);
     }
   }
 };
