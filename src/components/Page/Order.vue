@@ -49,6 +49,40 @@
                 <v-btn class="mt-n2" color="teal" text>VIEW PRODUK</v-btn>
             </v-card-actions>
         </v-card>
-        <v-btn color="success" x-large dark>PURCHASE</v-btn>
+        <v-dialog v-model="purchasedialog.visible"
+            class="mx-auto" 
+            max-width="500px" 
+            transition="dialog-top-transition"
+            persistent>
+            <template v-slot:activator="{ on, attrs }" >
+                <v-btn color="success" x-large dark v-bind="attrs" v-on="on">PURCHASE</v-btn>
+            </template>
+            <v-card v-model="purchasedialog">
+                <v-card-title>Confirm Purchase</v-card-title>
+                <v-card-text align="left">
+                    Total Amount : Rp {{ purchasedialog.totalprice }}
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn depressed color="teal" text @click="purchasedialog.visible = false">BATAL</v-btn>
+                    <v-btn depressed color="primary">BELI</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
+
+<script>
+    export default {
+        data: () => ({
+            purchasedialog: {
+                visible: false,
+                totalprice: 100000,
+            },
+        }),
+        methods: {
+            viewCategory(index){
+                console.log(index);
+            },
+        },
+}
+</script>
