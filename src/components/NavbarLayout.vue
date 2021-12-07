@@ -24,17 +24,72 @@
           :key="item"
           :to="item.to">{{ item.title }}</v-tab>
       </v-tabs>
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
+
+      <v-menu
+        :close-on-content-click="false"
+        offset-y="true"
+        bottom
+        right>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-magnify</v-icon>
+          </v-btn>
+        </template>
+        <v-card>
+          <v-container>
+            <v-text-field v-model="searchquery"
+              solo
+              label="Search"
+              clearable>
+              <v-btn icon slot="append" @click="searchProduct"><v-icon>mdi-magnify</v-icon></v-btn>
+            </v-text-field> 
+          </v-container>
+        </v-card>
+      </v-menu>
+
+      <v-menu v-model="userinfo"
+        offset-y="true"
+        bottom
+        right>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+        </template>
+        <v-card>
+          <v-col>
+            <v-row>
+              <div class="d-flex">
+                <v-img  :src="userinfo.icon" width="80" height="80px"/>
+                <v-container fluid class="fill-height font-weight-bold">
+                  {{ userinfo.name }}
+                </v-container>
+              </div>
+            </v-row>
+            <v-row>
+              <v-container pa-0 ma-0>
+                <v-list>
+                  <v-list-item
+                    v-for="opt in signedoption"
+                    :key="opt"
+                    :to="opt.to"
+                    >
+                    {{ opt.title }}
+                  </v-list-item>
+                </v-list>
+              </v-container>
+            </v-row>
+          </v-col>
+        </v-card>
+      </v-menu>
     </v-app-bar>
+
     <v-divider></v-divider>
+
     <div class="fullheight pa-5">
         <router-view></router-view>
     </div>
+
     <v-navigation-drawer v-model="drawer" 
       class="fullheight teal" 
       width="256" 
@@ -57,20 +112,6 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-
-    <!--
-    
-    <v-app-bar app fixed height="75px" class="teal">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <VSpacer />
-      <v-toolbar-items>
-        <v-btn text router></v-btn>
-      </v-toolbar-items>
-    </v-app-bar>
-    <div class="fullheight pa-5">
-        <router-view></router-view>
-    </div>
-    -->
   </div>
 </template>
 
@@ -79,6 +120,7 @@ export default {
   name: "Dashboard",
   data() {
     return {
+      searchquery: "",
       drawer: false,
       items: [
         { title: "Home", icon: 'mdi-image', to: '/homePage' },
@@ -86,9 +128,23 @@ export default {
         { title: 'Brand', icon: 'mdi-view-dashboard', to: '/brandPage' },
         { title: 'Your Order', icon: 'mdi-view-dashboard', to: '/orderPage' },
       ],
+      userinfo:{
+        name: "John Smith",
+        icon: "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+      },
+      signedoption: [
+        { title: 'Settings', to:'/profilePage' },
+        { title: 'Log Out', to:'/' },
+      ],
       right: null,
     };
   },
+  methods:{
+    searchProduct(){
+      //Ganti dan masukkan fungsi search query
+      console.log(this.searchquery);
+    }
+  }
 };
 </script>
 

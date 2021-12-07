@@ -93,6 +93,13 @@ const router = new VueRouter({
                     meta: { title: 'Kategori' },
                     component: importComponent('Page/Kategori'),
                 },
+                //Category Query
+                {
+                    path: '/kategoriPage/:id',
+                    name: 'Kategori',
+                    meta: { title: 'Kategori' },
+                    component: importComponent('Page/FilteredProduk'),
+                },
                 //Brand
                 {
                     path: '/brandPage',
@@ -100,12 +107,33 @@ const router = new VueRouter({
                     meta: { title: 'Brands' },
                     component: importComponent('Page/Brand'),
                 },
+                //Brand Query
+                {
+                    path: '/brandPage/:id',
+                    name: 'Brand',
+                    meta: { title: 'Brands' },
+                    component: importComponent('Page/FilteredProduk'),
+                },
                 //Order
                 {
                     path: '/orderPage',
                     name: 'Order',
                     meta: { title: 'Your Order' },
                     component: importComponent('Page/Order'),
+                },
+                //Search
+                {
+                    path: '/searchPage',
+                    name: 'Search',
+                    meta: { title: 'Search' },
+                    component: importComponent('Page/FilteredProduk'),
+                },
+                //Profil
+                {
+                    path: '/profilePage',
+                    name: 'Home',
+                    meta: { title: 'Home' },
+                    component: importComponent('Page/Profil'),
                 },
             ],
         },
