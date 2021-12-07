@@ -35,7 +35,7 @@
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
         </template>
-        <v-card>
+        <v-card width="500px">
           <v-container>
             <v-text-field v-model="searchquery"
               solo
@@ -135,10 +135,10 @@ export default {
   },
   methods:{
     searchProduct(){
-      //Ganti dan masukkan fungsi search query
-      //this.$router.push("/searchPage?search="+this.searchquery);
       this.$router.replace({name: 'Search', query: {search : this.searchquery}});
-      window.location.reload();
+      if(this.$route.name==="Search"){
+        window.location.reload();
+      }
     }
   }
 };
