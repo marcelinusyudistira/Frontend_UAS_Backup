@@ -42,11 +42,11 @@
           height="200px"
           :src="require('@/assets/produk/' + x.gambarProduk + '.png')"/>
         <v-col>
-          <v-row class="mx-2 mt-2 text-body-1 bold">
+          <v-row class="mx-2 mt-2 text-body-1 ">
             {{ x.namaProduk }}
           </v-row>
-          <v-row class="mx-2 mt-2 text-body-2 ">
-            {{ x.deskripsi }}
+          <v-row class="mx-2 mt-2 text-body-2" >
+            {{ x.deskripsi.substring(0,23) + "..." }}
           </v-row>
           <v-row class="mx-auto mt-2 float-right">
             <div class="mx-2 overline float-right">
