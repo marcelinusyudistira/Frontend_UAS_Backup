@@ -84,7 +84,7 @@ export default {
         { title: "Home", icon: 'mdi-image', to: '/homePage' },
         { title: 'Category', icon: 'mdi-view-dashboard', to: '/kategoriPage' },
         { title: 'Brand', icon: 'mdi-view-dashboard', to: '/brandPage' },
-        { title: 'Produk', icon: 'mdi-view-dashboard', to: '/produkPage' },
+        { title: 'Your Order', icon: 'mdi-view-dashboard', to: '/orderPage' },
       ],
       right: null,
     };

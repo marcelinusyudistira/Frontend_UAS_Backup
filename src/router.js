@@ -100,6 +100,13 @@ const router = new VueRouter({
                     meta: { title: 'Brands' },
                     component: importComponent('Page/Brand'),
                 },
+                //Order
+                {
+                    path: '/orderPage',
+                    name: 'Order',
+                    meta: { title: 'Your Order' },
+                    component: importComponent('Page/Order'),
+                },
             ],
         },
 

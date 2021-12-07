@@ -5,7 +5,7 @@
             max-width="800px"
             height="300px">
             <div class="d-flex">
-                <img
+                <v-img
                     width="300px"
                     height="300px"
                     src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"/>
@@ -27,7 +27,7 @@
         <v-card 
             class="mx-auto hidden-md-and-up"
             width="300px">
-            <img
+            <v-img
                 width="300px"
                 height="300px"
                 src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"/>
@@ -44,7 +44,6 @@
                     <v-btn color="teal" text>ADD TO CART</v-btn>
                 </v-card-actions>
             </v-container>
-            
         </v-card>
     </div>
     
