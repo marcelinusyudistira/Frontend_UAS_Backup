@@ -8,16 +8,16 @@
                 class="mx-auto my-3"
                 width="250px"
                 height="270px"
-                v-for="cat in categories"
+                v-for="cat in kategoris"
                 :key="cat"
                 @click="viewCategory(cat)">
                 <v-img
                 class="white--text align-end"
                 height="200px"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"/>
+                :src="require('@/assets/category/' + cat.gambarKategori + '.png')"/>
                 <v-col>
                     <v-row class="mx-2 mt-2 text-body-1">
-                        Kategori Produk
+                        {{ cat.namaKategori }}
                     </v-row>
                 </v-col>
             </v-card>
@@ -28,19 +28,30 @@
 <script>
     export default {
         data: () => ({
-        categories: [
-            { title: 'Barang Baru!', col:"red" },
-            { title: 'Gebyar Diskon', col:"green" },
-            { title: 'Gebyar Diskon', col:"green" },
-            { title: 'Gebyar Diskon', col:"green" },
-            { title: 'Gebyar Diskon', col:"green" },
-            { title: 'Gebyar Diskon', col:"green" },
-        ],
+        kategoris: [],
         }),
         methods: {
             viewCategory(index){
                 console.log(index);
-            }
-        }
-    }
+            },
+            readData() {
+            var url = this.$api + '/category';
+            this.$http.get(url, {
+                headers: {
+                    'Authorization' : 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(response => {
+                this.kategoris = response.data.data;
+            })
+        },
+    },
+     computed: {
+        formTitle() {
+            return this.inputType;
+        },
+    },
+    mounted() {
+        this.readData();
+    },
+}
 </script>

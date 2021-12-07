@@ -14,10 +14,10 @@
                 <v-img
                 class="white--text align-end"
                 height="200px"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"/>
+                :src="require('@/assets/brand/' + brand.gambarBrand + '.png')"/>
                 <v-col>
                     <v-row class="mx-2 mt-2 text-body-1">
-                        Brand X
+                        {{brand.namaBrand}}
                     </v-row>
                 </v-col>
             </v-card>
@@ -28,17 +28,30 @@
 <script>
     export default {
         data: () => ({
-        brands: [
-            { title: 'Barang Baru!', col:"red" },
-            { title: 'Gebyar Diskon', col:"green" },
-            { title: 'Gebyar Diskon', col:"green" },
-            { title: 'Gebyar Diskon', col:"green" },
-        ],
+        brands: [],
         }),
         methods: {
             viewBrand(index){
                 console.log(index);
-            }
-        }
+            },
+            readData() {
+            var url = this.$api + '/brand';
+            this.$http.get(url, {
+                headers: {
+                    'Authorization' : 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(response => {
+                this.brands = response.data.data;
+            })
+        },
+        },
+        computed: {
+        formTitle() {
+            return this.inputType;
+        },
+    },
+    mounted() {
+        this.readData();
+    },
     }
 </script>

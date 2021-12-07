@@ -16,35 +16,35 @@ const router = new VueRouter({
             children: [
                 //Dashboard
                 {
-                    path: 'dashboard',
+                    path: '/dashboard',
                     name: 'Dashboard',
                     meta: { title: 'Dashboard' },
                     component: importComponent('Dashboard'),
                 },
                 //User
                 {
-                    path: 'user',
+                    path: '/user',
                     name: 'User',
                     meta: { title: 'Users' },
                     component: importComponent('DataMaster/Users'),
                 },
                 //Produk
                 {
-                    path: 'produk',
+                    path: '/produk',
                     name: 'Produk',
                     meta: { title: 'Products' },
                     component: importComponent('DataMaster/Produk'),
                 },
                 //Category
                 {
-                    path: 'category',
+                    path: '/category',
                     name: 'Category',
                     meta: { title: 'Categories' },
                     component: importComponent('DataMaster/Category'),
                 },
                 //Brand
                 {
-                    path: 'brand',
+                    path: '/brand',
                     name: 'Brand',
                     meta: { title: 'Brands' },
                     component: importComponent('DataMaster/Brand'),
