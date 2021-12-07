@@ -4,7 +4,8 @@
       class="teal"
       app
       dark
-      flat>
+      style="overflow: hidden">
+      <v-app-bar-nav-icon class="hidden-md-and-up" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <div>
         <v-list-item
           light>
@@ -15,7 +16,8 @@
         </v-list-item>
       </div>
       <v-tabs v-model="tab"
-        width="fit-content">
+        width="fit-content"
+        class="hidden-sm-and-down">
         <v-tabs-slider color="white"></v-tabs-slider>
         <v-tab 
           v-for="item in items"
@@ -33,16 +35,12 @@
     <div class="fullheight pa-5">
         <router-view></router-view>
     </div>
-
-    <!--
-    <v-navigation-drawer v-model="drawer" class="fullheight teal" width="256" app>
-      <v-list-item>
-        <v-list-item-content class="white">
-          <v-list-item-title class="title"> Tumbas Ecommerce </v-list-item-title>
-          <v-list-item-subtitle> Buy what are you want </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-      <v-divider></v-divider>
+    <v-navigation-drawer v-model="drawer" 
+      class="fullheight teal" 
+      width="256" 
+      app
+      temporary
+      dark>
       <v-list dense nav>
         <v-list-item
           v-for="item in items"
@@ -59,6 +57,9 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
+    <!--
+    
     <v-app-bar app fixed height="75px" class="teal">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <VSpacer />
@@ -78,7 +79,7 @@ export default {
   name: "Dashboard",
   data() {
     return {
-      drawer: true,
+      drawer: false,
       items: [
         { title: "Home", icon: 'mdi-image', to: '/homePage' },
         { title: 'Category', icon: 'mdi-view-dashboard', to: '/kategoriPage' },
