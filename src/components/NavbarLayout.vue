@@ -31,7 +31,7 @@
         bottom
         right>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
+          <v-btn icon v-bind="attrs" v-on="on" class="mr-3">
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
         </template>
@@ -56,7 +56,7 @@
             <v-icon>mdi-account</v-icon>
           </v-btn>
         </template>
-        <v-card v-model="userinfo">
+        <v-card v-model="userinfo" v-if="signedmode">
           <v-list>
             <v-list-item>
               <v-list-item-avatar>
@@ -68,6 +68,17 @@
             </v-list-item>
             <v-list-item
               v-for="opt in signedoption"
+              :key="opt"
+              :to="opt.to"
+              >
+              {{ opt.title }}
+            </v-list-item>
+          </v-list>
+        </v-card>
+        <v-card v-model="userinfo" v-if="!signedmode">
+          <v-list>
+            <v-list-item
+              v-for="opt in unsignedoption"
               :key="opt"
               :to="opt.to"
               >
@@ -127,9 +138,13 @@ export default {
         icon: "http://cdn.onlinewebfonts.com/svg/img_162044.png"
       },
       user: {},
+      signedmode: false,
       signedoption: [
         { title: 'Settings', to:'/profilePage' },
         { title: 'Log Out', to:'/' },
+      ],
+      unsignedoption: [
+        { title: 'Register', to:'/registerPage' },
       ],
       right: null,
     };
