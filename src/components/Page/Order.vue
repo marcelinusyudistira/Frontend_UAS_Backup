@@ -4,20 +4,23 @@
             Your Order
         </div>
         <v-card 
-            v-for="n in 5"
-            :key="n"
+            v-for="order in orderList"
+            :key="order"
             class="mx-auto mb-3 hidden-sm-and-down"
             height="150px">
-            <div class="d-flex">
+            <div class="d-flex"
+                v-for="x in produkList.filter((x) => x.id === order.produk_id)"
+                :key="x">
                 <v-img
                     width="150px"
                     height="150px"
-                    src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"/>
+                    :src="require('@/assets/produk/' + x.gambarProduk + '.png')"/>
                 <v-container fluid class="fill-height">
-                    <div align="left">
-                        <v-card-title class="font-weight-bold">Whitehaven Beach</v-card-title>
-                        <v-card-subtitle>Whitsunday Island, Whitsunday Islands</v-card-subtitle>
-                        <div class="mx-4 font-weight-bold text-uppercase">rp. 100.000</div>
+                    <div align="left"
+                        class="font-weight-bold">
+                        <v-card-title>{{x.namaProduk}}</v-card-title>
+                        <v-card-subtitle>{{ x.deskripsi }}</v-card-subtitle>
+                        <div class="mx-4 font-weight-bold text-uppercase">Rp. {{ x.harga }}</div>
                     </div>
                 </v-container>
             </div>
@@ -74,6 +77,9 @@
 <script>
     export default {
         data: () => ({
+            orderList:[],
+            produkList:[],
+            judul:'',
             purchasedialog: {
                 visible: false,
                 totalprice: 100000,
@@ -83,7 +89,37 @@
             viewCategory(index){
                 console.log(index);
             },
+            readDataOrder() {
+                var url = this.$api + '/orderdetail';
+                    this.$http.get(url, {
+                        headers: {
+                            'Authorization' : 'Bearer ' + localStorage.getItem('token')
+                        }
+                    }).then(response => {
+                        this.orderList = response.data.data;
+                    })
+            },
+            readDataProduk() {
+                var url = this.$api + '/produk';
+                    this.$http.get(url, {
+                        headers: {
+                            'Authorization' : 'Bearer ' + localStorage.getItem('token')
+                        }
+                    }).then(response => {
+                        this.produkList = response.data.data;
+                    })
+            },
+
 
         },
-}
+        computed: {
+            formTitle() {
+                return this.inputType;
+            },
+        },
+        mounted() {
+            this.readDataOrder();
+            this.readDataProduk();
+        },
+    }
 </script>
