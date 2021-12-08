@@ -38,23 +38,23 @@
                 });
             },
             readData() {
-            var url = this.$api + '/brand';
-            this.$http.get(url, {
-                headers: {
-                    'Authorization' : 'Bearer ' + localStorage.getItem('token')
-                }
-            }).then(response => {
-                this.brands = response.data.data;
-            })
-        },
+                var url = this.$api + '/brand';
+                this.$http.get(url, {
+                    headers: {
+                        'Authorization' : 'Bearer ' + localStorage.getItem('token')
+                    }
+                }).then(response => {
+                    this.brands = response.data.data;
+                })
+            },
         },
         computed: {
-        formTitle() {
-            return this.inputType;
+            formTitle() {
+                return this.inputType;
+            },
         },
-    },
-    mounted() {
-        this.readData();
-    },
+        mounted() {
+            this.readData();
+        },
     }
 </script>

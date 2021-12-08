@@ -64,7 +64,7 @@
       </v-card>
     </v-container>
     </div>
-    
+    <v-snackbar v-model="snackbar" :color="green" timeout="2000" bottom>Berhasil menambahkan kedalam ordre</v-snackbar>
   </div>
 
 </template>
@@ -75,6 +75,7 @@
       searchctx: "sr",
       searchtitle: "Search Result",
       searchquery: "",
+      snackbar:false,
       queryindex: 0,
       jenis:"",
       items: [],

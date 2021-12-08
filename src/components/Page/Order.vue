@@ -83,6 +83,7 @@
             viewCategory(index){
                 console.log(index);
             },
+
         },
 }
 </script>
