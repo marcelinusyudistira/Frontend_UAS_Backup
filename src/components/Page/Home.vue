@@ -36,7 +36,7 @@
         height="300px"
         v-for="x in items"
         :key="x"
-        @click="viewProduct(x)">
+        @click="viewProduct(x.id)">
         <v-img
           class="white--text align-end"
           height="200px"
@@ -70,7 +70,10 @@
     }),
     methods: {
       viewProduct(index){
-        console.log(index);
+        this.$router.push({
+          name: 'ProdukP',
+          params: {id: index}
+        });
       },
       readData() {
             var url = this.$api + '/produk';

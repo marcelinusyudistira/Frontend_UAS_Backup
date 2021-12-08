@@ -63,7 +63,7 @@
                 <v-img :src="userinfo.icon"/>
               </v-list-item-avatar>
               <v-list-item-content>
-                <v-list-item-title>{{ userinfo.name }}</v-list-item-title>
+                <v-list-item-title>{{ user.name }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item
@@ -123,9 +123,10 @@ export default {
         { title: 'Your Order', icon: 'mdi-view-dashboard', to: '/orderPage' },
       ],
       userinfo:{
-        name: "John Smith",
-        icon: "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+        name: "",
+        icon: "http://cdn.onlinewebfonts.com/svg/img_162044.png"
       },
+      user: {},
       signedoption: [
         { title: 'Settings', to:'/profilePage' },
         { title: 'Log Out', to:'/' },
@@ -139,8 +140,26 @@ export default {
       if(this.$route.name==="Search"){
         window.location.reload();
       }
-    }
-  }
+    },
+    readData() {
+      var url = this.$api + '/user/' + localStorage.getItem('id');
+        this.$http.get(url, {
+            headers: {
+                'Authorization' : 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(response => {
+            this.user = response.data.data;
+        })
+    },
+  },
+  computed: {
+    formTitle() {
+        return this.inputType;
+      },
+    },
+    mounted() {
+        this.readData();
+    },
 };
 </script>
 

@@ -10,7 +10,7 @@
                 height="270px"
                 v-for="cat in kategoris"
                 :key="cat"
-                @click="viewCategory(cat)">
+                @click="viewCategory(cat.id)">
                 <v-img
                 class="white--text align-end"
                 height="200px"
@@ -32,7 +32,10 @@
         }),
         methods: {
             viewCategory(index){
-                console.log(index);
+                this.$router.push({
+                    name: 'KategoriP',
+                    params: {id: index}
+                });
             },
             readData() {
             var url = this.$api + '/category';

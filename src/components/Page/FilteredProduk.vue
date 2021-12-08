@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-container v-model="searchctx" class="my-5 mx-auto text-h3">
+    <div v-if="jenis === 'category'">
+      <v-container v-model="searchctx" class="my-5 mx-auto text-h3">
       {{ searchtitle }}
     </v-container>
     <v-container fluid class="d-flex flex-wrap mx-auto mt-5">
@@ -8,29 +9,64 @@
         class="mx-auto my-3"
         width="250px"
         height="300px"
-        v-for="x in items"
+        v-for="x in items.filter((x) => x.category_id === queryindex)"
         :key="x"
-        @click="viewProduct(x)">
+        @click="viewProduct(x.id)">
         <v-img
           class="white--text align-end"
           height="200px"
-          src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"/>
+          :src="require('@/assets/produk/' + x.gambarProduk + '.png')"/>
         <v-col>
           <v-row class="mx-2 mt-2 text-body-1">
-            Nama Produk
+            {{ x.namaProduk }}
           </v-row>
           <v-row class="mx-2 mt-2 text-body-2">
-            Deskripsi Singkat Produk
+            {{ x.deskripsi.substring(0,23) + "..." }}
           </v-row>
           <v-row class="mx-auto mt-2 float-right">
             <div class="mx-2 overline float-right">
-              rp. 100.000
+              Rp. {{ x.harga }}
             </div>
           </v-row>
         </v-col>
       </v-card>
     </v-container>
+    </div>
+    <div v-if="jenis === 'brand'">
+      <v-container v-model="searchctx" class="my-5 mx-auto text-h3">
+      {{ searchtitle }}
+    </v-container>
+    <v-container fluid class="d-flex flex-wrap mx-auto mt-5">
+      <v-card
+        class="mx-auto my-3"
+        width="250px"
+        height="300px"
+        v-for="x in items.filter((x) => x.brand_id === queryindex)"
+        :key="x"
+        @click="viewProduct(x.id)">
+        <v-img
+          class="white--text align-end"
+          height="200px"
+          :src="require('@/assets/produk/' + x.gambarProduk + '.png')"/>
+        <v-col>
+          <v-row class="mx-2 mt-2 text-body-1">
+            {{ x.namaProduk }}
+          </v-row>
+          <v-row class="mx-2 mt-2 text-body-2">
+            {{ x.deskripsi.substring(0,23) + "..." }}
+          </v-row>
+          <v-row class="mx-auto mt-2 float-right">
+            <div class="mx-2 overline float-right">
+              Rp. {{ x.harga }}
+            </div>
+          </v-row>
+        </v-col>
+      </v-card>
+    </v-container>
+    </div>
+    <v-snackbar v-model="snackbar" :color="green" timeout="2000" bottom>Berhasil menambahkan kedalam ordre</v-snackbar>
   </div>
+
 </template>
 
 <script>
@@ -39,13 +75,28 @@
       searchctx: "sr",
       searchtitle: "Search Result",
       searchquery: "",
+      snackbar:false,
       queryindex: 0,
-      items: [1,2,3,4,5,6,7,8,9,0],
+      jenis:"",
+      items: [],
     }),
     methods: {
       viewProduct(index){
-        console.log(index);
-      }
+        this.$router.push({
+          name: 'ProdukP',
+          params: {id: index}
+        });
+      },
+      readData() {
+            var url = this.$api + '/produk';
+            this.$http.get(url, {
+                headers: {
+                    'Authorization' : 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(response => {
+                this.items = response.data.data;
+            })
+      }, 
     },
     beforeMount(){
       var cpath = this.$route.path;
@@ -54,8 +105,10 @@
         this.queryindex = this.$route.params.id;
 
         this.searchtitle = "Category "+this.queryindex;
-
+        
         //Kode display data dari kategori ke-<id> di sini
+        this.jenis = "category";
+        
       }else if(cpath.match("/brandPage/")){
         this.searchctx = "bra";
         this.queryindex = this.$route.params.id;
@@ -63,12 +116,22 @@
         this.searchtitle = "Brand "+this.queryindex;
 
         //Kode display data dari brand ke-<id> di sini
+        this.jenis = "brand";
+
       }else {
         this.searchquery = this.$route.query.search;
         this.searchtitle = "Result for " + this.searchquery;
 
         //Kode Display hasil search di sini
       }
-    }
+    },
+       computed: {
+        formTitle() {
+            return this.inputType;
+        },
+    },
+    mounted() {
+        this.readData();
+    },
   }
 </script>

@@ -8,15 +8,15 @@
                 <v-img
                     width="300px"
                     height="300px"
-                    src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"/>
+                    :src="require('@/assets/produk/' + item.gambarProduk + '.png')"/>
                 <v-container fluid class="fill-height">
                     <div align="left">
-                        <v-card-title class="font-weight-bold">Whitehaven Beach</v-card-title>
+                        <v-card-title class="font-weight-bold">{{item.namaProduk}}</v-card-title>
                         <v-card-subtitle>Whitsunday Island, Whitsunday Islands</v-card-subtitle>
-                        <div class="mx-4 font-weight-bold text-uppercase">rp. 100.000</div>
+                        <div class="mx-4 font-weight-bold text-uppercase">Rp. {{item.harga}}</div>
                     </div>
                     <v-card-text align="left" class="text--primary">
-                        Deskripsi Produk
+                        {{item.deskripsi}}
                     </v-card-text>
                 </v-container>
             </div>
@@ -48,3 +48,32 @@
     </div>
     
 </template>
+
+<script>
+export default {
+    data: () => ({
+        queryindeks: 0,
+        item: {},
+    }),
+    methods: {
+        readData() {
+            var url = this.$api + '/produk/' + this.$route.params.id;
+            this.$http.get(url, {
+                headers: {
+                    'Authorization' : 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(response => {
+                this.item = response.data.data;
+            })
+        }, 
+    },
+    computed: {
+        formTitle() {
+            return this.inputType;
+        },
+    },
+    mounted() {
+        this.readData();
+    },
+}
+</script>
