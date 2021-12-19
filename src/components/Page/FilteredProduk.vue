@@ -15,7 +15,7 @@
         <v-img
           class="white--text align-end"
           height="200px"
-          :src="require('@/assets/produk/' + x.gambarProduk + '.png')"/>
+          :src="require('@/assets/produk/' + x.gambarProduk + '.jpg')"/>
         <v-col>
           <v-row class="mx-2 mt-2 text-body-1">
             {{ x.namaProduk }}
@@ -47,7 +47,7 @@
         <v-img
           class="white--text align-end"
           height="200px"
-          :src="require('@/assets/produk/' + x.gambarProduk + '.png')"/>
+          :src="require('@/assets/produk/' + x.gambarProduk + '.jpg')"/>
         <v-col>
           <v-row class="mx-2 mt-2 text-body-1">
             {{ x.namaProduk }}
@@ -64,7 +64,7 @@
       </v-card>
     </v-container>
     </div>
-    <v-snackbar v-model="snackbar" :color="green" timeout="2000" bottom>Berhasil menambahkan kedalam ordre</v-snackbar>
+    <v-snackbar v-model="snackbar" :color="green" timeout="2000" bottom>Berhasil menambahkan kedalam order</v-snackbar>
   </div>
 
 </template>

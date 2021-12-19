@@ -23,7 +23,7 @@
                     <v-btn small @click="deleteHandler(item.id)">delete</v-btn>
                 </template>
                 <template v-slot:[`item.gambarBrand`]="{ item }">
-                    <v-img :src="require('@/assets/brand/'+ item.gambarBrand +'.png')" class="white--text align-end" height="80px" width="80px"></v-img>
+                    <v-img :src="require('@/assets/brand/'+ item.gambarBrand +'.jpg')" class="white--text align-end" height="80px" width="80px"></v-img>
                 </template>
             </v-data-table>
         </v-card>
@@ -120,7 +120,7 @@ export default {
             this.brand.append('deskripsi', this.form.deskripsi);
             this.brand.append('gambarBrand', this.form.gambarBrand);
 
-            var url = this.$api + '/brand/'
+            var url = this.$api + '/brand'
             this.load = true;
             this.$http.post(url, this.brand, {
                 headers: {

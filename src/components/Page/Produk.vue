@@ -8,7 +8,7 @@
                 <v-img
                     width="300px"
                     height="300px"
-                    :src="require('@/assets/produk/' + item.gambarProduk + '.png')"/>
+                    :src="require('@/assets/produk/' + item.gambarProduk + '.jpg')"/>
                 <v-container fluid class="fill-height">
                     <div align="left">
                         <v-card-title class="font-weight-bold">{{item.namaProduk}}</v-card-title>

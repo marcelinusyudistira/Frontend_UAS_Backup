@@ -66,12 +66,11 @@
                 <v-list-item-title>{{ user.name }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item
-              v-for="opt in signedoption"
-              :key="opt"
-              :to="opt.to"
-              >
-              {{ opt.title }}
+            <v-list-item>
+              <v-btn @click="goProfile">Setting</v-btn>
+            </v-list-item>
+            <v-list-item>
+              <v-btn @click="keluar">Log Out</v-btn>
             </v-list-item>
           </v-list>
         </v-card>
@@ -144,7 +143,8 @@ export default {
         { title: 'Log Out', to:'/' },
       ],
       unsignedoption: [
-        { title: 'Register', to:'/registerPage' },
+        { title: 'Register', to:'/register' },
+        { title: 'Login', to:'/login' },
       ],
       right: null,
     };
@@ -164,8 +164,21 @@ export default {
             }
         }).then(response => {
             this.user = response.data.data;
+            this.signedmode=true;
         })
     },
+    goProfile(){
+      this.$router.push({
+        name: 'Profile',
+      });
+    },
+    keluar(){
+      localStorage.setItem("id","");
+      localStorage.setItem("token","");
+      this.$router.push({
+        name: 'Login',
+      });
+    }
   },
   computed: {
     formTitle() {

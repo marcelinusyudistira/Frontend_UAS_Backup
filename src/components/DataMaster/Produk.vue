@@ -23,7 +23,7 @@
                     <v-btn small @click="deleteHandler(item.id)">delete</v-btn>
                 </template>
                 <template v-slot:[`item.gambarProduk`]="{ item }">
-                    <v-img :src="require('@/assets/produk/'+ item.gambarProduk + '.png')" class="white--text align-end" height="80px" width="80px"></v-img>
+                    <v-img :src="require('@/assets/produk/'+ item.gambarProduk + '.jpg')" class="white--text align-end" height="80px" width="80px"></v-img>
                 </template>
             </v-data-table>
         </v-card>
@@ -35,8 +35,26 @@
                 <v-card-text>
                     <v-container>
                         <v-text-field v-model="form.namaProduk" label="Nama Produk" required></v-text-field>
-                        <v-text-field v-model="form.category_id" label="Kategori" required></v-text-field>
-                        <v-text-field v-model="form.brand_id" label="Brand" required></v-text-field>
+                        <!-- <v-text-field v-model="form.category_id" label="Kategori" required></v-text-field> -->
+                        <v-select
+                            v-model="form.category_id"
+                            :items="kategoris"
+                            item-value="id"
+                            item-text="namaKategori"
+                            :rules="[v => !!v || 'Item is required']"
+                            label="Kategori"
+                            required
+                        ></v-select>
+                        <v-select
+                            v-model="form.brand_id"
+                            :items="brands"
+                            item-value="id"
+                            item-text="namaBrand"
+                            :rules="[v => !!v || 'Item is required']"
+                            label="Brand"
+                            required
+                        ></v-select>
+                        <!-- <v-text-field v-model="form.brand_id" label="Brand" required></v-text-field> -->
                         <v-text-field v-model="form.harga" label="Harga" required></v-text-field>
                         <v-text-field v-model="form.stok" label="Stok" required></v-text-field>
                         <v-text-field v-model="form.deskripsi" label="Deskripsi" required></v-text-field>
@@ -48,6 +66,7 @@
                         <v-btn color="blue darken-1" text @click="setForm">Save</v-btn>
                     </v-card-action>
                 </v-card-text>
+                
             </v-card>
         </v-dialog>
 
@@ -79,6 +98,8 @@ export default {
             snackbar: false,
             error_message: '',
             color: '',
+            kategoris:[],
+            brands:[],
             search: null,
             dialog: false,
             dialogConfirm: false,
@@ -97,7 +118,7 @@ export default {
             form: {
                 namaProduk: null,
                 category_id: null,
-                brand_id: null,
+                brand_id: 1,
                 harga: null,
                 stok: null,
                 deskripsi: null,
@@ -130,13 +151,13 @@ export default {
         save() {
             this.produk.append('namaProduk', this.form.namaProduk);
             this.produk.append('category_id', this.form.category_id);
-            this.produk.append('brand_id', this.form.brand_id);
+            this.produk.append('brand_id', 1);
             this.produk.append('harga', this.form.harga);
             this.produk.append('stok', this.form.stok);
             this.produk.append('deskripsi', this.form.deskripsi);
             this.produk.append('gambarProduk', this.form.gambarProduk);
 
-            var url = this.$api + '/produk/'
+            var url = this.$api + '/produk'
             this.load = true;
             this.$http.post(url, this.produk, {
                 headers: {
@@ -239,7 +260,6 @@ export default {
         },
         cancel() {
             this.resetForm();
-            this.resetData();
             this.dialog = false;
             this.dialogConfirm = false;
             this.inputType = 'Tambah';
@@ -251,6 +271,27 @@ export default {
                 gambarKategori: null,
             };
         },
+        readDataKategori() {
+            var url = this.$api + '/category';
+            this.$http.get(url, {
+                headers: {
+                    'Authorization' : 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(response => {
+                this.kategoris = response.data.data;
+            })
+        },
+        readDataBrand() {
+            var url = this.$api + '/brand';
+            this.$http.get(url, {
+                headers: {
+                    'Authorization' : 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(response => {
+                this.brands = response.data.data;
+            })
+        },
+
     },
     computed: {
         formTitle() {
@@ -259,6 +300,8 @@ export default {
     },
     mounted() {
         this.readData();
+        this.readDataKategori();
+        this.readDataBrand();
     },
 };
 </script>

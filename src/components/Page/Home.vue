@@ -40,7 +40,7 @@
         <v-img
           class="white--text align-end"
           height="200px"
-          :src="require('@/assets/produk/' + x.gambarProduk + '.png')"/>
+          :src="require('@/assets/produk/' + x.gambarProduk + '.jpg')"/>
         <v-col>
           <v-row class="mx-2 mt-2 text-body-1 ">
             {{ x.namaProduk }}

@@ -135,23 +135,14 @@ const router = new VueRouter({
                     meta: { title: 'Profile' },
                     component: importComponent('Page/Profil'),
                 },
-                //Profil - Login
-                {
-                    path: '/loginPage',
-                    name: 'Login',
-                    meta: { title: 'Login' },
-                    component: importComponent('Page/Login'),
-                },
-                //Profil - Register
-                {
-                    path: '/registerPage',
-                    name: 'Register',
-                    meta: { title: 'Register' },
-                    component: importComponent('Page/Register'),
-                },
             ],
         },
-
+        {
+            path: "/verif/:email/:password/:date",
+            component: importComponent("EmailCek"),
+            name: "EmailCek",
+            meta: { title: "EmailCek" },
+        },
         {
             path: '*',
             redirect: '/'

@@ -3,9 +3,9 @@
         <v-container fluid fill-height class="posisinya">
             <v-layout flex align-center justify-center>
                 <v-flex xs12 sm6 elevation-6>
-                    <v-toolbar class="grey darken-3">
-                         <v-toolbar-title class="grey--text">
-                            <h1>Met dateng bossque, xixixi</h1>
+                    <v-toolbar class="blue darken-3">
+                         <v-toolbar-title class="white--text">
+                            <h1>Monggo Login</h1>
                         </v-toolbar-title>
                     </v-toolbar>
                     <v-card>
@@ -16,7 +16,7 @@
                                     <v-text-field label="Password" v-model="password" type="pasword" min="8" :rules="passwordRules" counter required></v-text-field>
                                     <v-layout justify-end>
                                         <v-btn class="mr-2" @click="submit" :class=" { 'grey darken-1 white--text' : valid, disabled: !valid }">Go</v-btn>
-                                        <v-btn @click="clear" class="grey darken-3 white--text">Clear</v-btn>
+                                        <v-btn @click="clear" class="blue darken-3 white--text">Clear</v-btn>
                                     </v-layout>
                                     <p>Belum memiliki akun? Silahkan<v-btn v-on:click="regPage" color="primary" text x-small>Registrasi</v-btn></p> 
                                 </v-form>
@@ -31,9 +31,9 @@
 </template>
 
 <style>
-    @import url("https://fonts.googleapis.com/css?family=Jolly%20Lodger");
+    @import url("https://fonts.googleapis.com/css?family=Roboto");
     .grey--text{
-        font-family: "Jolly Lodger";
+        font-family: "Roboto";
     }
 
     .posisinya{
@@ -73,17 +73,24 @@
                         email: this.email,
                         password: this.password
                     }).then(response => {
-                        //simpan data id user yang diinput
-                        localStorage.setItem('id', response.data.user.id);
-                        localStorage.setItem('token', response.data.access_token);
-                        this.error_message = response.data.message;
-                        this.color = "green";
-                        this.snackbar = true;
-                        this.load = false;
-                        this.clear();
-                        this.$router.push({
-                            name: 'Dashboard',
-                        });
+                        if(response.data.user.email_verified_at == null){
+                            this.error_message = "Silahkan Verifikasi Email terlebih dulu";
+                            this.color = "red";
+                            this.snackbar = true;
+                            this.load = false;
+                        }else{
+                            //simpan data id user yang diinput
+                            localStorage.setItem('id', response.data.user.id);
+                            localStorage.setItem('token', response.data.access_token);
+                            this.error_message = response.data.message;
+                            this.color = "green";
+                            this.snackbar = true;
+                            this.load = false;
+                            this.clear();
+                            this.$router.push({
+                                path: '/homePage',
+                            });
+                        }
                     }).catch(error => {
                         console.log(error.response)
                         this.error_message = error.response.data.message;

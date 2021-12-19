@@ -1,10 +1,10 @@
 <template>
   <div class="dashboard">
-    <v-navigation-drawer v-model="drawer" class="fullheight" width="256" app>
+    <v-navigation-drawer v-model="drawer" class="fullheight" width="256" app color="blue darken-1">
         <v-list-item>
-            <v-list-item-content>
-                <v-list-item-title class="title"> Marcelinus Yoga </v-list-item-title>
-                <v-list-item-subtitle> 190710378 </v-list-item-subtitle>
+            <v-list-item-content class="white">
+                <v-list-item-title class="title" > Tumbas Ecommerce </v-list-item-title>
+                <v-list-item-subtitle> Buy whatever you want </v-list-item-subtitle>
             </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
@@ -13,15 +13,19 @@
               v-for="item in items"
               :key="item.title"
               link
+              align="left"
               tag="router-link"
               :to="item.to">
-              <v-list-item-content>
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon> 
+              <v-list-item-content >
+                <v-list-item-title >{{ item.title }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
         </v-list>
     </v-navigation-drawer>
-    <v-app-bar app fixed height="75px">
+    <v-app-bar app fixed height="75px" color="blue darken-1">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <VSpacer />
       <v-toolbar-items>
@@ -41,11 +45,11 @@ export default {
     return {
       drawer: true,
       items: [
-        { title: "Dashboard", to: 'dashboard' },
-        { title: 'Manage User', to: 'user' },
-        { title: 'Manage Category', to: 'category' },
-        { title: 'Manage Brand', to: 'brand' },
-        { title: 'Manage Produk', to: 'produk' },
+        { title: "Dashboard", icon: 'mdi-view-dashboard',to: 'dashboard' },
+        { title: 'Manage User', icon: 'mdi-view-dashboard', to: 'user' },
+        { title: 'Manage Category', icon: 'mdi-view-dashboard',  to: 'category' },
+        { title: 'Manage Brand', icon: 'mdi-view-dashboard',  to: 'brand' },
+        { title: 'Manage Produk', icon: 'mdi-view-dashboard',  to: 'produk' },
       ],
     };
   },

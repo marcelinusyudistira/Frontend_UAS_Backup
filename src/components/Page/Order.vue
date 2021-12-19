@@ -14,7 +14,7 @@
                 <v-img
                     width="150px"
                     height="150px"
-                    :src="require('@/assets/produk/' + x.gambarProduk + '.png')"/>
+                    :src="require('@/assets/produk/' + x.gambarProduk + '.jpg')"/>
                 <v-container fluid class="fill-height">
                     <div align="left"
                         class="font-weight-bold">
@@ -25,52 +25,41 @@
                 </v-container>
             </div>
             <v-card-actions class="float-left float-end mt-n13">
-                <v-btn color="teal" text>HAPUS</v-btn>
-                <v-btn color="teal" text>VIEW PRODUK</v-btn>
+                <v-btn color="teal" @click="deleteOrder(order.id)" text>HAPUS</v-btn>
+                <v-btn color="teal" @click="goHome" text>VIEW PRODUK</v-btn>
             </v-card-actions>
         </v-card>
-        <v-card
-            v-for="n in 5"
-            :key="n"
-            class="mx-auto mb-3 hidden-md-and-up"
-            height="200px">
-            <div class="d-flex">
-                <v-img
-                    width="100px"
-                    height="200px"
-                    src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"/>
-                <v-container fluid class="fill-height">
-                    <div align="left">
-                        <v-card-title class="font-weight-bold">Whitehaven Beach</v-card-title>
-                        <v-card-subtitle>Whitsunday Island, Whitsunday Islands</v-card-subtitle>
-                        <div class="mx-4 font-weight-bold text-uppercase">rp. 100.000</div>
-                    </div>
-                </v-container>
-            </div>
-            <v-card-actions class="float-left float-end mt-n13">
-                <v-btn class="mt-n2" color="teal" text>HAPUS</v-btn>
-                <v-btn class="mt-n2" color="teal" text>VIEW PRODUK</v-btn>
-            </v-card-actions>
-        </v-card>
+        
         <v-dialog v-model="purchasedialog.visible"
             class="mx-auto" 
             max-width="500px" 
             transition="dialog-top-transition"
-            persistent>
+            >
             <template v-slot:activator="{ on, attrs }" >
                 <v-btn color="success" x-large dark v-bind="attrs" v-on="on">PURCHASE</v-btn>
             </template>
             <v-card v-model="purchasedialog">
                 <v-card-title>Confirm Purchase</v-card-title>
                 <v-card-text align="left">
-                    Total Amount : Rp {{ purchasedialog.totalprice }}
+                    Total Amount : Rp {{ total }}
                 </v-card-text>
+                <v-container fluid>
+                    <v-row align="center">
+                        <v-col class="d-flex mx-4" cols="12" sm="6">
+                            <v-select
+                            :items="items"
+                            label="Pembayaran"
+                            ></v-select>
+                        </v-col>
+                    </v-row>
+                </v-container>
                 <v-card-actions>
-                    <v-btn depressed color="teal" text @click="purchasedialog.visible = false">BATAL</v-btn>
-                    <v-btn depressed color="primary">BELI</v-btn>
+                    <v-btn depressed class="mx-auto" color="teal" text @click="purchasedialog.visible = false">BATAL</v-btn>
+                    <v-btn depressed class="mx-auto" color="primary" @click="pembayaran">BELI</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <v-snackbar v-model="snackbar" :color="color" timeout="2000" bottom>{{ error_message }}</v-snackbar>
     </div>
 </template>
 
@@ -79,11 +68,17 @@
         data: () => ({
             orderList:[],
             produkList:[],
+            items: ['Visa', 'PayPal', 'PayWave', 'Master Card'],
             judul:'',
+            load: false,
+            cekAuth:'false',
+            total:0,
+            snackbar:false,
             purchasedialog: {
                 visible: false,
-                totalprice: 100000,
+                totalprice: 0,
             },
+            myDate : new Date().toISOString().slice(0,10)
         }),
         methods: {
             viewCategory(index){
@@ -109,7 +104,74 @@
                         this.produkList = response.data.data;
                     })
             },
-
+            readTotal(){
+                var url = this.$api + '/count';
+                    this.$http.get(url, {
+                        headers: {
+                            'Authorization' : 'Bearer ' + localStorage.getItem('token')
+                        }
+                    }).then(response => {
+                        this.total = response.data;
+                    })
+            },
+            goHome(){
+                this.$router.push({
+                name: 'Home',
+                });
+            },
+            deleteOrder(index){
+                var url = this.$api + '/orderdetail/' + index;
+                this.load = true;
+                this.$http.delete(url, {
+                    headers: {
+                        'Authorization' : 'Bearer ' + localStorage.getItem('token')
+                    }
+                }).then(response => {
+                    this.error_message = response.data.message;
+                    this.color = "green";
+                    this.snackbar = true;
+                    this.load = false;
+                    this.close();
+                    this.readData(); // baca data
+                    this.resetForm();
+                    this.inputType = 'Tambah';
+                }).catch(error => {
+                    this.error_message = error.response.data.message;
+                    this.color = "red";
+                    this.snackbar = true;
+                    this.load = false;
+                });
+            },
+            pembayaran(){
+                let newData = {
+                    user_id : localStorage.getItem("id"),
+                    tanggal : this.myDate,
+                    status : "Sudah Bayar",
+                    kode : 1,
+                    jumlah_harga : this.total,
+                };
+                
+                var url = this.$api + '/order'
+                this.load = true;
+                this.snackbar = true;
+                this.$http.post(url, newData, {
+                    headers: {
+                        'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+                    }
+                }).then(response => {
+                    this.error_message = response.data.message;
+                    this.color = "green";
+                    this.snackbar = true;
+                    this.load = true;
+                    this.purchasedialog.visible=false;
+                }).catch(error => {
+                    this.error_message = error.response.data.message;
+                    this.color = "red";
+                    this.snackbar = true;
+                    this.load = false;
+                    this.purchasedialog.visible=false;
+                });
+            }
 
         },
         computed: {
@@ -120,6 +182,7 @@
         mounted() {
             this.readDataOrder();
             this.readDataProduk();
+            this.readTotal();
         },
     }
 </script>

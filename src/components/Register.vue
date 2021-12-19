@@ -3,8 +3,8 @@
         <v-container fluid fill-height class="posisinya">
             <v-layout flex align-center justify-center>
                 <v-flex xs12 sm6 elevation-6>
-                    <v-toolbar class="grey darken-3">
-                         <v-toolbar-title class="grey--text">
+                    <v-toolbar class="blue darken-3">
+                         <v-toolbar-title class="white--text">
                             <h1>Registrasi User</h1>
                         </v-toolbar-title>
                     </v-toolbar>
@@ -17,7 +17,7 @@
                                     <v-text-field label="Password" v-model="password" type="pasword" min="8" :rules="passwordRules" counter required></v-text-field>
                                     <v-layout justify-end>
                                         <v-btn class="mr-2" @click="submit" :class=" { 'grey darken-1 white--text' : valid, disabled: !valid }">Register</v-btn>
-                                        <v-btn @click="clear" class="grey darken-3 white--text">Clear</v-btn>
+                                        <v-btn @click="clear" class="blue darken-3 white--text">Clear</v-btn>
                                     </v-layout>
                                     <p>Sudah memiliki akun? Silahkan<v-btn v-on:click="logPage" color="primary" text x-small>Login</v-btn></p>
                                 </v-form>
@@ -32,9 +32,9 @@
 </template>
 
 <style>
-    @import url("https://fonts.googleapis.com/css?family=Jolly%20Lodger");
+    @import url("https://fonts.googleapis.com/css?family=Roboto");
     .grey--text{
-        font-family: "Jolly Lodger";
+        font-family: "Roboto";
     }
 
     .posisinya{
@@ -90,7 +90,7 @@
                         this.load = true;
                         this.clear();
                         this.$router.push({
-                            name: 'Dashboard',
+                            path: '/login',
                         });
                     }).catch(error => {
                         console.log(error.response)
